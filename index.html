@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Oficina Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+  <main class="login-shell">
+    <section class="login-card">
+      <p class="eyebrow">Multi-oficinas</p>
+      <h1>Oficina Manager</h1>
+      <p class="muted">Entre com o usuário cadastrado para acessar o painel correto.</p>
+
+      <form id="loginForm" class="stack-form">
+        <label>
+          Email
+          <input id="loginEmail" type="email" autocomplete="username" required>
+        </label>
+        <label>
+          Senha
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="primary-button" type="submit">Entrar</button>
+      </form>
+
+      <p id="loginMessage" class="form-message" role="status"></p>
+
+      <details class="setup-box">
+        <summary>Primeiro acesso</summary>
+        <p class="muted">Use esta opção uma vez para criar o login do admin mestre.</p>
+        <form id="setupMasterForm" class="stack-form">
+          <label>
+            Email do admin
+            <input id="setupMasterEmail" type="email" value="admin@oficina.com" required>
+          </label>
+          <label>
+            Senha do admin
+            <input id="setupMasterPassword" type="text" value="123456" required>
+          </label>
+          <button class="ghost-button" type="submit">Criar admin mestre</button>
+        </form>
+        <p id="setupMessage" class="form-message" role="status"></p>
+      </details>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>

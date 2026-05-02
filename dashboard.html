@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel | Oficina Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow" id="userTypeLabel">Painel</p>
+      <h1 id="panelTitle">Oficina Manager</h1>
+    </div>
+    <img class="header-logo" id="headerLogo" alt="Logo da oficina">
+    <button class="ghost-button" id="logoutBtn" type="button">Sair</button>
+  </header>
+
+  <nav class="tabs" id="masterTabs" aria-label="Menu admin mestre">
+    <button class="tab-button active" data-tab="masterOverview" type="button">Resumo</button>
+    <button class="tab-button" data-tab="masterWorkshops" type="button">Oficinas</button>
+    <button class="tab-button" data-tab="masterUsers" type="button">Usuários</button>
+  </nav>
+
+  <nav class="tabs" id="workshopTabs" aria-label="Menu da oficina">
+    <button class="tab-button active" data-tab="clients" type="button">Clientes</button>
+    <button class="tab-button" data-tab="orders" type="button">Ordens</button>
+    <button class="tab-button" data-tab="settings" type="button">Configurações</button>
+  </nav>
+
+  <main>
+    <section class="tab-panel active" id="masterOverview">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Admin mestre</p>
+          <h2>Dados gerais</h2>
+        </div>
+      </div>
+      <div class="stats-grid" id="masterStats"></div>
+    </section>
+
+    <section class="tab-panel" id="masterWorkshops">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Admin mestre</p>
+          <h2>Oficinas</h2>
+        </div>
+      </div>
+
+      <form class="form-grid" id="workshopForm">
+        <input id="workshopId" type="hidden">
+        <label>
+          Nome da oficina
+          <input id="workshopName" type="text" required>
+        </label>
+        <label>
+          Logo (URL)
+          <input id="workshopLogo" type="url" placeholder="https://...">
+        </label>
+        <label>
+          Foto da logo
+          <input id="workshopLogoFile" type="file" accept="image/*">
+        </label>
+        <input id="workshopLogoData" type="hidden">
+        <div class="image-preview full-row" id="workshopLogoPreview">Sem foto selecionada</div>
+        <label>
+          Cor do sistema
+          <input id="workshopColor" type="color" value="#146c43">
+        </label>
+        <label>
+          WhatsApp da oficina
+          <input id="workshopWhatsapp" type="tel" inputmode="tel" placeholder="DDD + número">
+        </label>
+        <button class="primary-button full-row" type="submit">Salvar oficina</button>
+        <button class="ghost-button full-row" id="clearWorkshopFormBtn" type="button">Limpar formulário</button>
+      </form>
+
+      <div class="list" id="workshopsList"></div>
+    </section>
+
+    <section class="tab-panel" id="masterUsers">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Acessos</p>
+          <h2>Usuários</h2>
+        </div>
+      </div>
+
+      <form class="form-grid" id="userForm">
+        <label>
+          Email
+          <input id="userEmail" type="email" required>
+        </label>
+        <label>
+          Senha
+          <input id="userPassword" type="text" required>
+        </label>
+        <label>
+          Tipo
+          <select id="userType" required>
+            <option value="cliente">Cliente / Oficina</option>
+            <option value="master">Master</option>
+          </select>
+        </label>
+        <label>
+          Oficina
+          <select id="userWorkshop"></select>
+        </label>
+        <button class="primary-button full-row" type="submit">Criar usuário</button>
+      </form>
+
+      <div class="list" id="usersList"></div>
+    </section>
+
+    <section class="tab-panel active" id="clients">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Atendimento</p>
+          <h2>Clientes</h2>
+        </div>
+      </div>
+
+      <form class="form-grid" id="clientForm">
+        <label>
+          Nome
+          <input id="clientName" type="text" required>
+        </label>
+        <label>
+          Telefone
+          <input id="clientPhone" type="tel" inputmode="tel" required>
+        </label>
+        <label>
+          Carro
+          <input id="clientCar" type="text" required>
+        </label>
+        <label>
+          Placa
+          <input id="clientPlate" type="text" required>
+        </label>
+        <button class="primary-button full-row" type="submit">Salvar cliente</button>
+      </form>
+
+      <div class="toolbar">
+        <input id="clientSearch" type="search" placeholder="Buscar cliente, carro, placa ou telefone">
+      </div>
+      <div class="list" id="clientsList"></div>
+    </section>
+
+    <section class="tab-panel" id="orders">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Serviços</p>
+          <h2>Ordens de Serviço</h2>
+        </div>
+      </div>
+
+      <form class="form-grid" id="orderForm">
+        <label class="full-row">
+          Cliente
+          <select id="orderClient" required></select>
+        </label>
+        <label class="full-row">
+          Problema
+          <textarea id="orderProblem" rows="3" required></textarea>
+        </label>
+        <label class="full-row">
+          Serviço realizado
+          <textarea id="orderService" rows="3" required></textarea>
+        </label>
+        <label>
+          Valor
+          <input id="orderValue" type="number" min="0" step="0.01" inputmode="decimal" required>
+        </label>
+        <label>
+          Status
+          <select id="orderStatus" required>
+            <option value="em andamento">Em andamento</option>
+            <option value="aguardando peça">Aguardando peça</option>
+            <option value="finalizado">Finalizado</option>
+          </select>
+        </label>
+        <label>
+          Pagamento
+          <select id="orderPayment" required>
+            <option value="fiado">Fiado</option>
+            <option value="parcial">Parcial</option>
+            <option value="pago">Pago</option>
+          </select>
+        </label>
+        <button class="primary-button full-row" type="submit">Salvar ordem</button>
+      </form>
+
+      <div class="toolbar">
+        <select id="statusFilter">
+          <option value="todos">Todos os status</option>
+          <option value="em andamento">Em andamento</option>
+          <option value="aguardando peça">Aguardando peça</option>
+          <option value="finalizado">Finalizado</option>
+        </select>
+      </div>
+      <div class="list" id="ordersList"></div>
+    </section>
+
+    <section class="tab-panel" id="settings">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Oficina</p>
+          <h2>Configurações</h2>
+        </div>
+      </div>
+
+      <form class="form-grid" id="settingsForm">
+        <label>
+          Nome da oficina
+          <input id="settingsName" type="text" required>
+        </label>
+        <label>
+          Cor do sistema
+          <input id="settingsColor" type="color" required>
+        </label>
+        <label>
+          WhatsApp
+          <input id="settingsWhatsapp" type="tel" inputmode="tel">
+        </label>
+        <label>
+          Logo (URL)
+          <input id="settingsLogo" type="url">
+        </label>
+        <label>
+          Foto da logo
+          <input id="settingsLogoFile" type="file" accept="image/*">
+        </label>
+        <input id="settingsLogoData" type="hidden">
+        <div class="image-preview full-row" id="settingsLogoPreview">Sem foto selecionada</div>
+        <button class="primary-button full-row" type="submit">Salvar configurações</button>
+      </form>
+    </section>
+  </main>
+
+  <a class="support-whatsapp" id="supportWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Suporte no WhatsApp">
+    <span>☎</span>
+  </a>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
